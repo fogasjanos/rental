@@ -13,19 +13,19 @@ mvnw spring-boot:run
 ## How to test
 
 ### Swagger
-http://localhost:8080/swagger-ui.html
+http://localhost:8080/swagger-ui/
 
 ### DB console
 http://localhost:8080/h2/
 
-You can log-in with the default credentials.
+You can log in with the default credentials.
 
 ### Project requirements
 #### Java version
-It requires Java JDK 11.
+It requires Java 17.
 
 #### Lombok
-Step by step guide how to enable/install into your favourite IDE can be found here: https://www.baeldung.com/lombok-ide
+Step-by-step guide how to enable/install into your favourite IDE can be found here: https://www.baeldung.com/lombok-ide
 
 
 ### Possible improvements

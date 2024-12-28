@@ -1,16 +1,16 @@
 package eu.fogas.rental.api.booking.model.converter;
 
-import eu.fogas.rental.api.booking.model.Usage;
+import eu.fogas.rental.api.booking.model.Country;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 import java.util.Arrays;
 
 @Converter(autoApply = true)
-public class UsageConverter implements AttributeConverter<Usage, String> {
+public class CountryConverter implements AttributeConverter<Country, String> {
 
     @Override
-    public String convertToDatabaseColumn(Usage usage) {
+    public String convertToDatabaseColumn(Country usage) {
         if (usage == null) {
             return null;
         }
@@ -18,12 +18,12 @@ public class UsageConverter implements AttributeConverter<Usage, String> {
     }
 
     @Override
-    public Usage convertToEntityAttribute(String usageLabel) {
-        if (usageLabel == null) {
+    public Country convertToEntityAttribute(String countryLabel) {
+        if (countryLabel == null) {
             return null;
         }
-        return Arrays.stream(Usage.values())
-                .filter(usage -> usage.getLabel().equals(usageLabel))
+        return Arrays.stream(Country.values())
+                .filter(country -> country.getLabel().equals(countryLabel))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }

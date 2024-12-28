@@ -1,9 +1,9 @@
 package eu.fogas.rental.api.car.model.converter;
 
 import eu.fogas.rental.api.car.model.Brand;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
-import javax.persistence.AttributeConverter;
-import javax.persistence.Converter;
 import java.util.Arrays;
 
 @Converter(autoApply = true)

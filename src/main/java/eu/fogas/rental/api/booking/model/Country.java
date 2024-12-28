@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Arrays;
 
-public enum Usage {
-    DOMESTIC("domestic"),
-    FOREIGN("foreign");
+public enum Country {
+    AUSTRIA("Austria"),
+    HUNGARY("Hungary");
 
     private final String label;
 
-    Usage(String label) {
+    Country(String label) {
         this.label = label;
     }
 
@@ -21,12 +21,12 @@ public enum Usage {
     }
 
     @JsonCreator
-    public Usage parse(String label) {
+    public Country parse(String label) {
         if (label == null) {
             return null;
         }
-        return Arrays.stream(Usage.values())
-                .filter(usage -> usage.label.equals(label))
+        return Arrays.stream(Country.values())
+                .filter(country -> country.label.equals(label))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }

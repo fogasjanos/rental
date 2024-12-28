@@ -2,31 +2,34 @@ package eu.fogas.rental.api.booking;
 
 import eu.fogas.rental.api.booking.model.Booking;
 import eu.fogas.rental.api.car.model.Car;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
 
 import static eu.fogas.rental.api.booking.model.Usage.DOMESTIC;
 import static eu.fogas.rental.api.car.model.Brand.MAZDA;
 import static eu.fogas.rental.api.car.model.Brand.SKODA;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @DataJpaTest
 public class BookingRepositoryIntegrationTest {
     private static final LocalDate TODAY = LocalDate.now();
 
-    @Autowired
-    private TestEntityManager entityManager;
+    private final TestEntityManager entityManager;
+    private final BookingRepository bookingRepository;
 
     @Autowired
-    private BookingRepository bookingRepository;
+    public BookingRepositoryIntegrationTest(TestEntityManager entityManager, BookingRepository bookingRepository) {
+        this.entityManager = entityManager;
+        this.bookingRepository = bookingRepository;
+    }
 
     @Test
     public void isCarAvailable_shouldReturnTrue_whenCarIsAvailable() {

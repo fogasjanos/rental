@@ -8,5 +8,7 @@ class RentCarsApplicationsTests {
 
     @Test
     void contextLoads() {
+        // context successfully loaded
+        assert(true);
     }
 }

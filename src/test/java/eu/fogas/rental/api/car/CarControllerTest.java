@@ -4,13 +4,13 @@ import eu.fogas.rental.api.car.model.Brand;
 import eu.fogas.rental.api.car.model.Car;
 import eu.fogas.rental.error.exception.CarNotAvailableException;
 import eu.fogas.rental.error.exception.CarNotFoundException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(CarController.class)
 @AutoConfigureMockMvc
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 public class CarControllerTest {
     private static final Car SKODA = Car.builder()
             .carId(13)
@@ -36,7 +36,7 @@ public class CarControllerTest {
             .build();
     @Autowired
     private MockMvc mockMvc;
-    @MockBean
+    @MockitoBean
     private CarService carService;
 
     @Test
@@ -117,6 +117,6 @@ public class CarControllerTest {
 
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("status").value("BAD_REQUEST"))
-                .andExpect(jsonPath("message").value("Error code: 'typeMismatch'. Required type: 'long'. Value: 'alma'."));
+                .andExpect(jsonPath("message").value("Error code: 'typeMismatch'. Property name: 'id'. Required type: 'long'. Value: 'alma'."));
     }
 }

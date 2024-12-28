@@ -1,14 +1,14 @@
 package eu.fogas.rental.api.booking.model;
 
 import eu.fogas.rental.api.car.model.Car;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @NamedNativeQuery(name = "Booking.isCarAvailable",
         query = "SELECT COUNT(car_id) = 0 " +
@@ -36,10 +36,10 @@ public class Booking {
 
     private Usage usage;
 
-    @ElementCollection(targetClass = String.class)
-    private List<String> targetCountries;
+    @ElementCollection(targetClass = Country.class)
+    private Set<Country> targetCountries;
 
-    public Booking(Car car, LocalDate rangeFrom, LocalDate rangeTo, Usage usage, List<String> targetCountries) {
+    public Booking(Car car, LocalDate rangeFrom, LocalDate rangeTo, Usage usage, Set<Country> targetCountries) {
         this.car = car;
         this.rangeFrom = rangeFrom;
         this.rangeTo = rangeTo;

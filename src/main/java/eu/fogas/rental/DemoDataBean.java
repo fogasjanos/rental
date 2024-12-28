@@ -2,20 +2,21 @@ package eu.fogas.rental;
 
 import eu.fogas.rental.api.booking.BookingRepository;
 import eu.fogas.rental.api.booking.model.Booking;
+import eu.fogas.rental.api.booking.model.Country;
 import eu.fogas.rental.api.car.CarRepository;
 import eu.fogas.rental.api.car.model.Car;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 
+import static eu.fogas.rental.api.booking.model.Country.AUSTRIA;
 import static eu.fogas.rental.api.booking.model.Usage.DOMESTIC;
 import static eu.fogas.rental.api.booking.model.Usage.FOREIGN;
 import static eu.fogas.rental.api.car.model.Brand.*;
@@ -23,8 +24,8 @@ import static eu.fogas.rental.api.car.model.Brand.*;
 @Configuration
 @Slf4j
 public class DemoDataBean {
+
     @Bean
-    @Autowired
     public CommandLineRunner createDemoData(CarRepository carRepository, BookingRepository bookingRepository) {
         return args -> {
             saveCars(carRepository);
@@ -53,8 +54,8 @@ public class DemoDataBean {
         LocalDate today = LocalDate.now();
         LocalDate tomorrow = LocalDate.now().plusDays(1);
         List<Booking> sampleBookings = Arrays.asList(
-                new Booking(carIterator.next(), today, tomorrow, DOMESTIC, Collections.emptyList()),
-                new Booking(carIterator.next(), today, tomorrow, FOREIGN, Collections.singletonList("Austria"))
+                new Booking(carIterator.next(), today, tomorrow, DOMESTIC, EnumSet.noneOf(Country.class)),
+                new Booking(carIterator.next(), today, tomorrow, FOREIGN, EnumSet.of(AUSTRIA))
         );
 
         log.info("Saving sample bookings to DB! Bookings: {}", sampleBookings);

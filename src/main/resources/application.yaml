@@ -1,0 +1,18 @@
+spring:
+  # DB
+  datasource:
+    platform: h2
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    # Disable Open Session In View
+    open-in-view: false
+  h2:
+    console:
+      # Enabling H2 Console
+      enabled: true
+      # Custom H2 Console URL
+      path: /h2

@@ -1,23 +1,19 @@
 package eu.fogas.rental.api.car;
 
 import eu.fogas.rental.api.car.model.Car;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/cars")
 public class CarController {
     private final CarService carService;
-
-    @Autowired
-    public CarController(CarService carService) {
-        this.carService = carService;
-    }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)

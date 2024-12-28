@@ -4,22 +4,23 @@ import eu.fogas.rental.api.car.model.Brand;
 import eu.fogas.rental.api.car.model.Car;
 import eu.fogas.rental.error.exception.CarNotAvailableException;
 import eu.fogas.rental.error.exception.CarNotFoundException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class DefaultCarServiceTest {
     private static final LocalDate TODAY = LocalDate.now();
     private static final Car CAR = Car.builder()
@@ -33,21 +34,27 @@ public class DefaultCarServiceTest {
     @Mock
     private CarRepository carRepository;
 
-    @Test(expected = CarNotFoundException.class)
+    @Test
     public void getCarById_shouldThrowCarNotFoundException_whenCarDoesNotExists() {
         long nonExistingId = 123_536L;
         when(carRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        carService.getCarById(nonExistingId);
+        var e = assertThrows(CarNotFoundException.class,
+                () -> carService.getCarById(nonExistingId));
+
+        assertEquals("Car not found. Id: 123536", e.getMessage());
     }
 
-    @Test(expected = CarNotAvailableException.class)
+    @Test
     public void getCarById_shouldThrowCarNotAvailableException_whenCarAlreadyBooked() {
         long carId = CAR.getCarId();
         when(carRepository.findById(carId)).thenReturn(Optional.of(CAR));
         when(carRepository.findAvailableCarById(carId, TODAY)).thenReturn(Optional.empty());
 
-        carService.getCarById(carId);
+        var e = assertThrows(CarNotAvailableException.class,
+                () -> carService.getCarById(carId));
+
+        assertEquals("Car not available. Id: 16", e.getMessage());
     }
 
     @Test
