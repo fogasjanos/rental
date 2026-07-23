@@ -1,18 +1,15 @@
 package eu.fogas.rental.api.booking;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.fogas.rental.api.booking.model.BookingRequest;
 import eu.fogas.rental.api.booking.model.Country;
 import eu.fogas.rental.api.booking.model.Usage;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.Date;
 import java.util.EnumSet;
@@ -23,8 +20,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(BookingController.class)
-@AutoConfigureMockMvc
-@ExtendWith(SpringExtension.class)
 public class BookingControllerTest {
     private static final Date TODAY = new Date();
     private static final String EMPTY = "";
@@ -84,7 +79,7 @@ public class BookingControllerTest {
                                 .content(mapper.writeValueAsString(booking)))
 
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("status").value("BAD_REQUEST"))
+                .andExpect(jsonPath("status").value("400 BAD_REQUEST"))
                 .andExpect(jsonPath("message").value("Invalid request!"))
                 .andExpect(jsonPath("errors[0].field").value("targetCountries"))
                 .andExpect(jsonPath("errors[0].message").value("The field targetCountries is required when usage is foreign!"));
@@ -100,7 +95,7 @@ public class BookingControllerTest {
                                 .content(mapper.writeValueAsString(booking)))
 
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("status").value("BAD_REQUEST"))
+                .andExpect(jsonPath("status").value("400 BAD_REQUEST"))
                 .andExpect(jsonPath("message").value("Invalid request!"))
                 .andExpect(jsonPath("errors[0].field").value("targetCountries"))
                 .andExpect(jsonPath("errors[0].message").value("The field targetCountries is required when usage is foreign!"));
@@ -116,7 +111,7 @@ public class BookingControllerTest {
                                 .content(mapper.writeValueAsString(booking)))
 
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("status").value("BAD_REQUEST"))
+                .andExpect(jsonPath("status").value("400 BAD_REQUEST"))
                 .andExpect(jsonPath("message").value("Invalid request!"))
                 .andExpect(jsonPath("errors[0].field").value("targetCountries"))
                 .andExpect(jsonPath("errors[0].message").value("The field targetCountries should be empty or null when usage is domestic!"));
@@ -132,7 +127,7 @@ public class BookingControllerTest {
                                 .content(mapper.writeValueAsString(booking)))
 
                 .andExpect(status().isUnsupportedMediaType())
-                .andExpect(jsonPath("status").value("UNSUPPORTED_MEDIA_TYPE"))
+                .andExpect(jsonPath("status").value("415 UNSUPPORTED_MEDIA_TYPE"))
                 .andExpect(jsonPath("message").value("Unsupported media type: application/octet-stream;charset=UTF-8"));
     }
 
@@ -142,7 +137,7 @@ public class BookingControllerTest {
                         get("/bookings"))
 
                 .andExpect(status().isMethodNotAllowed())
-                .andExpect(jsonPath("status").value("METHOD_NOT_ALLOWED"))
+                .andExpect(jsonPath("status").value("405 METHOD_NOT_ALLOWED"))
                 .andExpect(jsonPath("message").value("GET method is not supported for this request. Supported methods are PUT "));
     }
 }

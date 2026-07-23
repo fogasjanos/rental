@@ -5,12 +5,9 @@ import eu.fogas.rental.api.car.model.Car;
 import eu.fogas.rental.error.exception.CarNotAvailableException;
 import eu.fogas.rental.error.exception.CarNotFoundException;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
@@ -24,8 +21,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CarController.class)
-@AutoConfigureMockMvc
-@ExtendWith(SpringExtension.class)
 public class CarControllerTest {
     private static final Car SKODA = Car.builder()
             .carId(13)
@@ -85,7 +80,7 @@ public class CarControllerTest {
         mockMvc.perform(get("/cars/999"))
 
                 .andExpect(status().isConflict())
-                .andExpect(jsonPath("status").value("CONFLICT"))
+                .andExpect(jsonPath("status").value("409 CONFLICT"))
                 .andExpect(jsonPath("message").value("Car not available. Id: " + unavailableId));
     }
 
@@ -97,7 +92,7 @@ public class CarControllerTest {
         mockMvc.perform(get("/cars/999"))
 
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("status").value("NOT_FOUND"))
+                .andExpect(jsonPath("status").value("404 NOT_FOUND"))
                 .andExpect(jsonPath("message").value("Car not found. Id: " + missingId));
     }
 
@@ -106,7 +101,7 @@ public class CarControllerTest {
         mockMvc.perform(post("/cars/999"))
 
                 .andExpect(status().isMethodNotAllowed())
-                .andExpect(jsonPath("status").value("METHOD_NOT_ALLOWED"))
+                .andExpect(jsonPath("status").value("405 METHOD_NOT_ALLOWED"))
                 .andExpect(jsonPath("message").value("POST method is not supported for this request. Supported methods are GET "));
     }
 
@@ -116,7 +111,7 @@ public class CarControllerTest {
         mockMvc.perform(get("/cars/alma"))
 
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("status").value("BAD_REQUEST"))
+                .andExpect(jsonPath("status").value("400 BAD_REQUEST"))
                 .andExpect(jsonPath("message").value("Error code: 'typeMismatch'. Property name: 'id'. Required type: 'long'. Value: 'alma'."));
     }
 }

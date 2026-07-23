@@ -35,6 +35,7 @@ public class Booking {
 
     private LocalDate rangeTo;
 
+    @Enumerated(EnumType.STRING)
     private Usage usage;
 
     @ElementCollection(targetClass = Country.class)

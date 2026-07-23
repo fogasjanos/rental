@@ -3,11 +3,9 @@ package eu.fogas.rental.api.booking;
 import eu.fogas.rental.api.booking.model.Booking;
 import eu.fogas.rental.api.car.model.Car;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
 
@@ -17,7 +15,6 @@ import static eu.fogas.rental.api.car.model.Brand.SKODA;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@ExtendWith(SpringExtension.class)
 @DataJpaTest
 public class BookingRepositoryIntegrationTest {
     private static final LocalDate TODAY = LocalDate.now();

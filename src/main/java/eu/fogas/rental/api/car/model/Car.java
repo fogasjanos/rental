@@ -41,6 +41,7 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long carId;
+    @Enumerated(EnumType.STRING)
     private Brand brand;
     private String model;
     private String plate;
