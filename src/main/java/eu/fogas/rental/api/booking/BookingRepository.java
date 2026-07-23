@@ -8,6 +8,10 @@ import java.time.LocalDate;
 
 public interface BookingRepository extends CrudRepository<Booking, Long> {
 
-    Boolean isCarAvailable(@Param("carId") long carId, @Param("rangeFrom") LocalDate rangeFrom, @Param("rangeTo") LocalDate rangeTo);
-
+    Boolean isCarAvailable(@Param("carId")
+                           long carId,
+                           @Param("rangeFrom")
+                           LocalDate rangeFrom,
+                           @Param("rangeTo")
+                           LocalDate rangeTo);
 }

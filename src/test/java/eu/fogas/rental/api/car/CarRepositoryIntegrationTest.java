@@ -5,8 +5,8 @@ import eu.fogas.rental.api.car.model.Car;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
@@ -15,19 +15,20 @@ import java.util.List;
 import static eu.fogas.rental.api.booking.model.Usage.DOMESTIC;
 import static eu.fogas.rental.api.car.model.Brand.TOYOTA;
 import static eu.fogas.rental.api.car.model.Brand.VOLVO;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-public record CarRepositoryIntegrationTest(
-        TestEntityManager entityManager,
-        CarRepository carRepository) {
+public class CarRepositoryIntegrationTest {
     private static final LocalDate TODAY = LocalDate.now();
+    private final TestEntityManager entityManager;
+    private final CarRepository carRepository;
 
     @Autowired
-    public CarRepositoryIntegrationTest {
+    public CarRepositoryIntegrationTest(TestEntityManager entityManager,
+                                        CarRepository carRepository) {
+        this.entityManager = entityManager;
+        this.carRepository = carRepository;
     }
 
     @Test
@@ -70,7 +71,7 @@ public record CarRepositoryIntegrationTest(
 
         assertNotNull(cars);
         assertEquals(1, cars.size());
-        assertEquals(expected, cars.get(0));
+        assertEquals(expected, cars.getFirst());
     }
 
     @Test

@@ -37,7 +37,13 @@ public class DefaultBookingService implements BookingService {
             throw new CarNotAvailableException(carId);
         }
 
-        Booking booking = new Booking(car.get(), from, to, bookingRequest.usage(), bookingRequest.targetCountries());
+        var booking = Booking.builder()
+                .car(car.get())
+                .rangeFrom(from)
+                .rangeTo(to)
+                .usage(bookingRequest.usage())
+                .targetCountries(bookingRequest.targetCountries())
+                .build();
         log.debug("Saving booking: {}.", booking);
         bookingRepository.save(booking);
     }

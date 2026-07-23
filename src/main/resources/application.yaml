@@ -1,7 +1,6 @@
 spring:
   # DB
   datasource:
-    platform: h2
     url: jdbc:h2:mem:testdb
     driverClassName: org.h2.Driver
     username: sa
@@ -16,3 +15,6 @@ spring:
       enabled: true
       # Custom H2 Console URL
       path: /h2
+  sql:
+    init:
+      platform: h2

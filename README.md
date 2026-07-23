@@ -1,28 +1,28 @@
 # Getting Started
 
 ## How to compile
-```
-mvnw clean compile
+```shell
+./mvnw clean compile
 ```
 
 ## How to run
-```
-mvnw spring-boot:run
+```shell
+./mvnw spring-boot:run
 ```
 
 ## How to test
 
 ### Swagger
-http://localhost:8080/swagger-ui/
+[http://localhost:8080/swagger-ui/](http://localhost:8080/swagger-ui/index.html)
 
 ### DB console
-http://localhost:8080/h2/
+[http://localhost:8080/h2/](http://localhost:8080/h2/)
 
 You can log in with the default credentials.
 
 ### Project requirements
 #### Java version
-It requires Java 17.
+It requires Java 21.
 
 #### Lombok
 Step-by-step guide how to enable/install into your favourite IDE can be found here: https://www.baeldung.com/lombok-ide

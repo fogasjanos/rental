@@ -37,14 +37,48 @@ public class DemoDataBean {
 
     private void saveCars(CarRepository carRepository) {
         List<Car> sampleCars = Arrays.asList(
-                new Car(AUDI, "A6", "AUA-001", 71_000L),
-                new Car(OPEL, "Astra", "OPA-002", 68_300L),
-                new Car(TOYOTA, "Yaris", "TOY-003", 32_500L),
-                new Car(TESLA, "Cybertruck", "TEC-004", 199_990L),
-                new Car(SKODA, "Octavia", "SKO-005", 49_200L),
-                new Car(MAZDA, "MX-5", "MAM-006", 55_200L),
-                new Car(VOLVO, "V90", "VOV-007", 59_900L)
-        );
+                Car.builder()
+                        .brand(AUDI)
+                        .model("A6")
+                        .plate("AUA-001")
+                        .price(71_000L)
+                        .build(),
+                Car.builder()
+                        .brand(OPEL)
+                        .model("Astra")
+                        .plate("OPA-002")
+                        .price(68_300L)
+                        .build(),
+                Car.builder()
+                        .brand(TOYOTA)
+                        .model("Yaris")
+                        .plate("TOY-003")
+                        .price(32_500L)
+                        .build(),
+                Car.builder()
+                        .brand(TESLA)
+                        .model("Cybertruck")
+                        .plate("TEC-004")
+                        .price(199_990L)
+                        .build(),
+                Car.builder()
+                        .brand(SKODA)
+                        .model("Octavia")
+                        .plate("SKO-005")
+                        .price(49_200L)
+                        .build(),
+                Car.builder()
+                        .brand(MAZDA)
+                        .model("MX-5")
+                        .plate("MAM-006")
+                        .price(55_200L)
+                        .build(),
+                Car.builder()
+                        .brand(VOLVO)
+                        .model("V90")
+                        .plate("VOV-007")
+                        .price(59_900L)
+                        .build());
 
         log.info("Saving sample cars to DB! Cars: {}", sampleCars);
         carRepository.saveAll(sampleCars);
@@ -54,8 +88,20 @@ public class DemoDataBean {
         LocalDate today = LocalDate.now();
         LocalDate tomorrow = LocalDate.now().plusDays(1);
         List<Booking> sampleBookings = Arrays.asList(
-                new Booking(carIterator.next(), today, tomorrow, DOMESTIC, EnumSet.noneOf(Country.class)),
-                new Booking(carIterator.next(), today, tomorrow, FOREIGN, EnumSet.of(AUSTRIA))
+                Booking.builder()
+                        .car(carIterator.next())
+                        .rangeFrom(today)
+                        .rangeTo(tomorrow)
+                        .usage(DOMESTIC)
+                        .targetCountries(EnumSet.noneOf(Country.class))
+                        .build(),
+                Booking.builder()
+                        .car(carIterator.next())
+                        .rangeFrom(today)
+                        .rangeTo(tomorrow)
+                        .usage(FOREIGN)
+                        .targetCountries(EnumSet.of(AUSTRIA))
+                        .build()
         );
 
         log.info("Saving sample bookings to DB! Bookings: {}", sampleBookings);
